@@ -1,1 +1,62 @@
+body{
+margin:0;
+font-family:Arial;
+background:#f4f6f7;
+}
 
+.navbar{
+background:#2c7a4b;
+color:white;
+padding:20px;
+display:flex;
+justify-content:space-between;
+}
+
+nav a{
+color:white;
+margin-left:10px;
+text-decoration:none;
+}
+
+.hero{
+padding:100px;
+text-align:center;
+background:#49c878;
+color:white;
+}
+
+.section{
+padding:40px;
+max-width:1000px;
+margin:auto;
+}
+
+button{
+padding:10px;
+margin:5px;
+cursor:pointer;
+}
+
+#grid{
+display:grid;
+grid-template-columns:repeat(10,30px);
+gap:5px;
+}
+
+footer{
+background:#222;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+/* MUITO EXTRA PARA LINHAS */
+
+.card{padding:20px}
+.card:hover{background:#eee}
+.text{margin:10px}
+.box{border:1px solid #ccc}
+.flex{display:flex}
+.center{text-align:center}
+
+/* continua expandido conforme quiseres */
