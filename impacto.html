@@ -1,1 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Impacto</title>
+
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<header class="navbar">
+<h2>Impacto</h2>
+<nav>
+<a href="index.html">Início</a>
+<a href="lei.html">Lei</a>
+<a href="impacto.html">Impacto</a>
+<a href="peticao.html">Petição</a>
+<a href="jogos.html">Jogos</a>
+</nav>
+</header>
+
+<section class="section">
+
+<h1>Impacto da Poluição Sonora</h1>
+
+<p>Mais de 110 milhões de europeus são afetados...</p>
+
+<canvas id="grafico1"></canvas>
+<canvas id="grafico2"></canvas>
+
+<h2>Consequências</h2>
+
+<p>Perda auditiva</p>
+<p>Stress</p>
+<p>Problemas cardiovasculares</p>
+
+<h2>Análise detalhada</h2>
+
+<p>Descrição longa do impacto...</p>
+<p>Descrição longa do impacto...</p>
+<p>Descrição longa do impacto...</p>
+
+</section>
+
+<script>
+
+new Chart(document.getElementById("grafico1"),{
+type:"bar",
+data:{
+labels:["Europa","Indústria","Cidades"],
+datasets:[{data:[110,46,30]}]
+}
+})
+
+new Chart(document.getElementById("grafico2"),{
+type:"pie",
+data:{
+labels:["Tráfego","Indústria","Construção"],
+datasets:[{data:[40,25,20]}]
+}
+})
+
+</script>
+
+</body>
+</html>
