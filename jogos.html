@@ -3,60 +3,20 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Jogos Interativos</title>
+<title>Jogos Educativos</title>
+<link rel="stylesheet" href="style.css">
 
 <style>
 
-/* BASE */
-body{
-margin:0;
-font-family:Arial;
-background:#f4f6f7;
-}
-
-.navbar{
-background:#2c7a4b;
-color:white;
-padding:20px;
-display:flex;
-justify-content:space-between;
-}
-
-nav a{
-color:white;
-margin-left:15px;
-text-decoration:none;
-}
-
-.section{
-padding:40px;
-max-width:1000px;
-margin:auto;
-}
-
-button{
-padding:10px;
-margin:5px;
-cursor:pointer;
-border:none;
-background:#2c7a4b;
-color:white;
-border-radius:5px;
-}
-
-button:hover{
-background:#1f5d39;
-}
-
-/* SOPA */
+/* sopa de letras */
 #grid{
 display:grid;
-grid-template-columns:repeat(10,35px);
-gap:5px;
+grid-template-columns:repeat(12,35px);
+gap:4px;
 justify-content:center;
-margin-top:20px;
+margin:20px 0;
 }
 
 .letra{
@@ -70,9 +30,15 @@ cursor:pointer;
 background:white;
 }
 
-.selecionado{
+.sel{
 background:#2c7a4b;
 color:white;
+}
+
+/* quiz */
+#respostas button{
+display:block;
+margin:5px auto;
 }
 
 </style>
@@ -82,246 +48,133 @@ color:white;
 <body>
 
 <header class="navbar">
-<h2>Jogos Interativos</h2>
+<h1>Jogos Interativos</h1>
+
 <nav>
 <a href="index.html">Início</a>
 <a href="lei.html">Lei</a>
 <a href="impacto.html">Impacto</a>
 <a href="peticao.html">Petição</a>
+<a href="jogos.html">Jogos</a>
 </nav>
 </header>
 
-<!-- SIMULADOR -->
 <section class="section">
 
-<h2>Simulador de Fábrica</h2>
+<!-- 🔤 SOPA DE LETRAS -->
 
-<h1 id="ruido">50 dB</h1>
-<h2 id="dinheiro">€1000</h2>
+<h2>Sopa de Letras</h2>
 
-<button onclick="produzir()">Produzir</button>
-<button onclick="isolamento()">Isolar</button>
-
-<p id="estado"></p>
-
-</section>
-
-<!-- SOPA -->
-<section class="section">
-
-<h2>Sopa de Letras (encontra "RUIDO")</h2>
+<p>Encontra estas palavras: <strong>RUIDO, AMBIENTE, INDUSTRIA, SUSTENTAVEL</strong></p>
 
 <div id="grid"></div>
-<p id="resultadoSopa"></p>
+<p id="resultado"></p>
 
-</section>
+<hr>
 
-<!-- CAÇA PALAVRAS -->
-<section class="section">
-
-<h2>Caça-Palavras</h2>
-
-<input id="inputPalavra" placeholder="Ex: ruido">
-<button onclick="verificarPalavra()">Verificar</button>
-
-<p id="resPalavra"></p>
-
-</section>
-
-<!-- QUIZ -->
-<section class="section">
+<!-- 🧠 QUIZ -->
 
 <h2>Quiz</h2>
 
 <p id="pergunta"></p>
 <div id="respostas"></div>
-
 <p id="pontuacao"></p>
 
-<button onclick="reiniciarQuiz()">Reiniciar Quiz</button>
+<hr>
+
+<!-- ⚖️ JOGO DE DECISÃO -->
+
+<h2>Decisões Industriais</h2>
+
+<p id="situacao"></p>
+<div id="opcoes"></div>
+<p id="resultadoJogo"></p>
+
+<hr>
+
+<!-- 🧠 MEMÓRIA -->
+
+<h2>Memória</h2>
+
+<button onclick="startMem()">Começar</button>
+<p id="mem"></p>
 
 </section>
 
 <script>
 
-//////////////////////
-// SIMULADOR
-//////////////////////
+//////////////////////////
+// 🔤 SOPA DE LETRAS
+//////////////////////////
 
-let ruido = 50
-let dinheiro = 1000
-
-function atualizar(){
-document.getElementById("ruido").innerText = ruido + " dB"
-document.getElementById("dinheiro").innerText = "€" + dinheiro
-}
-
-function produzir(){
-
-ruido += Math.floor(Math.random()*15)
-dinheiro += 200
-
-if(ruido > 85){
-document.getElementById("estado").innerText = "❌ Fábrica fechada por excesso de ruído!"
-reset()
-}
-
-atualizar()
-}
-
-function isolamento(){
-
-dinheiro -= 150
-ruido -= Math.floor(Math.random()*20)
-
-if(ruido < 0) ruido = 0
-
-if(dinheiro < 0){
-document.getElementById("estado").innerText = "❌ Falência!"
-reset()
-}
-
-atualizar()
-}
-
-function reset(){
-ruido = 50
-dinheiro = 1000
-}
-
-//////////////////////
-// SOPA DE LETRAS
-//////////////////////
-
-let palavra = "RUIDO"
-let tamanho = 10
+let palavras = ["RUIDO","AMBIENTE","INDUSTRIA","SUSTENTAVEL"]
 let letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+let tamanho = 12
+
 let grid = document.getElementById("grid")
-
-let matriz = []
-
-for(let i=0;i<tamanho;i++){
-matriz[i]=[]
-for(let j=0;j<tamanho;j++){
-matriz[i][j]=letras[Math.floor(Math.random()*26)]
-}
-}
-
-let linha = Math.floor(Math.random()*tamanho)
-let col = Math.floor(Math.random()*(tamanho - palavra.length))
-
-for(let i=0;i<palavra.length;i++){
-matriz[linha][col+i]=palavra[i]
-}
-
 let selecionadas = ""
 
-for(let i=0;i<tamanho;i++){
-for(let j=0;j<tamanho;j++){
+// gerar grelha
+for(let i=0;i<tamanho*tamanho;i++){
 
 let div = document.createElement("div")
-div.innerText = matriz[i][j]
-div.className = "letra"
+div.className="letra"
+div.innerText = letras[Math.floor(Math.random()*26)]
 
 div.onclick = function(){
-
-div.classList.toggle("selecionado")
-
-if(div.classList.contains("selecionado")){
+div.classList.toggle("sel")
 selecionadas += div.innerText
-}else{
-selecionadas = selecionadas.replace(div.innerText,"")
-}
 
-if(selecionadas.includes(palavra)){
-document.getElementById("resultadoSopa").innerText = "✔ Palavra encontrada!"
+palavras.forEach(p=>{
+if(selecionadas.includes(p)){
+document.getElementById("resultado").innerText="Encontraste: "+p
 }
-
+})
 }
 
 grid.appendChild(div)
 
 }
-}
 
-//////////////////////
-// CAÇA PALAVRAS
-//////////////////////
-
-function verificarPalavra(){
-
-let input = document.getElementById("inputPalavra").value.toUpperCase()
-
-let palavras = ["RUIDO","AMBIENTE","INDUSTRIA","SUSTENTAVEL"]
-
-if(palavras.includes(input)){
-document.getElementById("resPalavra").innerText = "✔ Correto!"
-}else{
-document.getElementById("resPalavra").innerText = "❌ Errado"
-}
-
-}
-
-//////////////////////
-// QUIZ
-//////////////////////
+//////////////////////////
+// 🧠 QUIZ
+//////////////////////////
 
 let perguntas = [
-{
-q:"Qual o limite seguro de ruído?",
-a:["70 dB","85 dB","100 dB","120 dB"],
-c:1
-},
-{
-q:"Quem fiscaliza?",
-a:["APA","ONU","Google","Netflix"],
-c:0
-},
-{
-q:"O ruído pode causar?",
-a:["Fome","Surdez","Sono extra","Nada"],
-c:1
-},
-{
-q:"A lei cria?",
-a:["Imposto","Certificação","Prisão","Multa automática"],
-c:1
-},
-{
-q:"O objetivo principal é?",
-a:["Lucro","Política","Saúde e ambiente","Nada"],
-c:2
-}
+{q:"Qual o limite de ruído seguro?",a:["70","85","100"],c:1},
+{q:"Quem fiscaliza?",a:["APA","ONU","Google"],c:0},
+{q:"O ruído pode causar?",a:["Surdez","Nada","Fome"],c:0},
+{q:"A lei cria?",a:["Certificação","Nada","Imposto"],c:0},
+{q:"O objetivo é?",a:["Lucro","Ambiente","Nada"],c:1}
 ]
 
-let atual = 0
-let pontos = 0
+let atual=0
+let pontos=0
 
 function mostrarPergunta(){
 
-let p = perguntas[atual]
+let p=perguntas[atual]
 
-document.getElementById("pergunta").innerText = p.q
+document.getElementById("pergunta").innerText=p.q
 
-let div = document.getElementById("respostas")
-div.innerHTML = ""
+let div=document.getElementById("respostas")
+div.innerHTML=""
 
 p.a.forEach((txt,i)=>{
 
-let btn = document.createElement("button")
-btn.innerText = txt
+let btn=document.createElement("button")
+btn.innerText=txt
 
-btn.onclick = function(){
+btn.onclick=function(){
 
 if(i===p.c) pontos++
 
 atual++
 
-if(atual < perguntas.length){
+if(atual<perguntas.length){
 mostrarPergunta()
 }else{
-document.getElementById("pontuacao").innerText =
-"Pontuação: " + pontos + "/" + perguntas.length
+document.getElementById("pontuacao").innerText="Pontuação: "+pontos+"/"+perguntas.length
 }
 
 }
@@ -332,16 +185,93 @@ div.appendChild(btn)
 
 }
 
-function reiniciarQuiz(){
-atual = 0
-pontos = 0
-document.getElementById("pontuacao").innerText = ""
 mostrarPergunta()
+
+//////////////////////////
+// ⚖️ DECISÕES
+//////////////////////////
+
+let situacoes = [
+{
+s:"A fábrica ultrapassa 85 dB. O que fazes?",
+o:["Ignorar","Reduzir ruído"],
+c:1
+},
+{
+s:"Trabalhadores sem proteção.",
+o:["Nada","Fornecer proteção"],
+c:1
+}
+]
+
+let si=0
+let score=0
+
+function mostrarSit(){
+
+let s=situacoes[si]
+
+document.getElementById("situacao").innerText=s.s
+
+let div=document.getElementById("opcoes")
+div.innerHTML=""
+
+s.o.forEach((txt,i)=>{
+
+let btn=document.createElement("button")
+btn.innerText=txt
+
+btn.onclick=function(){
+
+if(i===s.c) score++
+
+si++
+
+if(si<situacoes.length){
+mostrarSit()
+}else{
+document.getElementById("resultadoJogo").innerText="Resultado: "+score+"/"+situacoes.length
 }
 
-mostrarPergunta()
+}
+
+div.appendChild(btn)
+
+})
+
+}
+
+mostrarSit()
+
+//////////////////////////
+// 🧠 MEMÓRIA
+//////////////////////////
+
+function startMem(){
+
+let n=""
+for(let i=0;i<5;i++){
+n += Math.floor(Math.random()*10)
+}
+
+document.getElementById("mem").innerText="Memoriza: "+n
+
+setTimeout(()=>{
+let r = prompt("Qual era o número?")
+if(r===n){
+alert("Correto!")
+}else{
+alert("Errado! Era "+n)
+}
+},3000)
+
+}
 
 </script>
+
+<footer>
+<p>Jogos educativos sobre sustentabilidade</p>
+</footer>
 
 </body>
 </html>
