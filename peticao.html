@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Petição</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petição Pública</title>
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
 <header class="navbar">
-
-<h2>Lei da Sustentabilidade Sonora</h2>
+<h1>Petição Pública</h1>
 
 <nav>
 <a href="index.html">Início</a>
@@ -24,127 +19,47 @@
 <a href="peticao.html">Petição</a>
 <a href="jogos.html">Jogos</a>
 </nav>
-
 </header>
 
-<section class="hero">
-
-<h1>Apoia a Petição</h1>
-
-<p>
-Ajuda a reduzir a poluição sonora e melhorar as condições de trabalho nas indústrias.
-</p>
-
-</section>
-
 <section class="section center">
 
-<h2>Assinaturas</h2>
-
-<h1 id="contador">1250</h1>
-
-<p>Pessoas já apoiaram esta iniciativa</p>
-
-</section>
-
-<section class="section">
-
-<h2>Assinar Petição</h2>
-
-<form id="form">
-
-<label>Nome:</label><br>
-<input type="text" id="nome"><br><br>
-
-<label>Email:</label><br>
-<input type="email" id="email"><br><br>
-
-<label>Comentário:</label><br>
-<textarea id="comentario"></textarea><br><br>
-
-<button type="submit">Assinar</button>
-
-</form>
-
-<p id="mensagem"></p>
-
-</section>
-
-<section class="section">
-
-<h2>Porquê esta petição?</h2>
+<h2>Apoia esta proposta</h2>
 
 <p>
-A poluição sonora é um dos principais problemas ambientais nas zonas industriais,
-afetando diretamente a saúde dos trabalhadores.
+Para que esta lei possa ter impacto real, é essencial o apoio da população.
+A petição pública permite demonstrar interesse e pressionar para mudanças.
 </p>
+
+<blockquote>
+"A mudança começa com a participação."
+</blockquote>
 
 <p>
-Esta petição pretende demonstrar o apoio público à criação de leis mais rigorosas
-e eficazes na redução do ruído industrial.
+Clica no botão abaixo para aceder à petição oficial:
 </p>
+
+<a class="botao" href="https://peticaopublica.com/pview.aspx?pi=PT130092" target="_blank">
+Abrir Petição Oficial
+</a>
+
+<h2>Porque é importante assinar?</h2>
+
+<ul>
+<li>Dá visibilidade ao problema do ruído industrial</li>
+<li>Ajuda a pressionar entidades responsáveis</li>
+<li>Mostra apoio público à sustentabilidade</li>
+<li>Pode influenciar decisões políticas</li>
+</ul>
 
 <p>
-Com mais assinaturas, maior será o impacto desta proposta junto das entidades responsáveis.
+Mesmo sendo um projeto escolar, a participação real pode fazer diferença.
 </p>
-
-</section>
-
-<section class="section center">
-
-<h2>Partilha</h2>
-
-<button onclick="partilhar()">Partilhar Site</button>
 
 </section>
 
 <footer>
-
-<p>Projeto A+ • Grupo 9 • Colégio Novo da Maia</p>
-
+<p>Projeto A+ • Grupo 9</p>
 </footer>
-
-<script>
-
-// CONTADOR
-
-let contador = 1250
-
-// FORMULÁRIO
-
-document.getElementById("form").onsubmit = function(e){
-
-e.preventDefault()
-
-let nome = document.getElementById("nome").value
-let email = document.getElementById("email").value
-
-if(nome === "" || email === ""){
-document.getElementById("mensagem").innerText = "Preenche todos os campos"
-return
-}
-
-contador++
-
-document.getElementById("contador").innerText = contador
-
-document.getElementById("mensagem").innerText = "Obrigado por assinar!"
-
-document.getElementById("form").reset()
-
-}
-
-// PARTILHA
-
-function partilhar(){
-
-navigator.clipboard.writeText(window.location.href)
-
-alert("Link copiado!")
-
-}
-
-</script>
 
 </body>
 </html>
