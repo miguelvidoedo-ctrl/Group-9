@@ -3,11 +3,13 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Impacto</title>
+<title>Impacto do Ruído</title>
 
 <link rel="stylesheet" href="style.css">
+
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
@@ -15,7 +17,8 @@
 <body>
 
 <header class="navbar">
-<h2>Impacto</h2>
+<h1>Impacto do Ruído Industrial</h1>
+
 <nav>
 <a href="index.html">Início</a>
 <a href="lei.html">Lei</a>
@@ -27,46 +30,89 @@
 
 <section class="section">
 
-<h1>Impacto da Poluição Sonora</h1>
+<h2>Impacto na Saúde</h2>
 
-<p>Mais de 110 milhões de europeus são afetados...</p>
+<p>
+O ruído industrial é uma das formas mais ignoradas de poluição, mas os seus efeitos são extremamente graves.
+A exposição prolongada pode causar perda auditiva permanente, stress crónico e doenças cardiovasculares.
+</p>
+
+<blockquote>
+"A poluição sonora é responsável por milhares de casos de problemas de saúde todos os anos."
+</blockquote>
+
+<p>
+Segundo dados europeus, mais de <strong>100 milhões de pessoas</strong> estão expostas a níveis perigosos de ruído.
+</p>
 
 <canvas id="grafico1"></canvas>
+
+<h2>Principais Fontes de Ruído</h2>
+
+<p>
+O ruído não vem apenas da indústria, mas esta é uma das principais fontes, especialmente em zonas urbanas e industriais.
+</p>
+
 <canvas id="grafico2"></canvas>
 
-<h2>Consequências</h2>
+<h2>Evolução do Problema</h2>
 
-<p>Perda auditiva</p>
-<p>Stress</p>
-<p>Problemas cardiovasculares</p>
+<p>
+Ao longo dos anos, o crescimento industrial tem contribuído para o aumento dos níveis de ruído.
+Sem controlo, este problema continuará a crescer.
+</p>
 
-<h2>Análise detalhada</h2>
-
-<p>Descrição longa do impacto...</p>
-<p>Descrição longa do impacto...</p>
-<p>Descrição longa do impacto...</p>
+<canvas id="grafico3"></canvas>
 
 </section>
 
 <script>
 
+// GRÁFICO 1 - impacto
 new Chart(document.getElementById("grafico1"),{
 type:"bar",
 data:{
-labels:["Europa","Indústria","Cidades"],
-datasets:[{data:[110,46,30]}]
+labels:["População afetada","Trabalhadores industriais","Zonas urbanas"],
+datasets:[{
+label:"Milhões de pessoas",
+data:[110,46,30],
+backgroundColor:["#2c7a4b","#49c878","#1f5d39"]
+}]
 }
 })
 
+// GRÁFICO 2 - fontes
 new Chart(document.getElementById("grafico2"),{
 type:"pie",
 data:{
-labels:["Tráfego","Indústria","Construção"],
-datasets:[{data:[40,25,20]}]
+labels:["Tráfego","Indústria","Construção","Outros"],
+datasets:[{
+label:"Fontes de ruído",
+data:[40,25,20,15],
+backgroundColor:["#2c7a4b","#49c878","#1f5d39","#88e0a3"]
+}]
+}
+})
+
+// GRÁFICO 3 - evolução
+new Chart(document.getElementById("grafico3"),{
+type:"line",
+data:{
+labels:["2010","2015","2020","2025"],
+datasets:[{
+label:"Aumento (%)",
+data:[10,20,35,50],
+borderColor:"#2c7a4b",
+fill:false
+}]
 }
 })
 
 </script>
+
+<footer>
+<p>Projeto A+ • Impacto do Ruído</p>
+</footer>
 
 </body>
 </html>
